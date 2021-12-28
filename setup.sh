@@ -2,6 +2,7 @@ sudo pacman -Syyu
 sudo pacman -S yay
 yay -S htop
 yay -S unzip
+yay -S pulseaudio
 yay -S neovim
 yay -S cmake
 yay -S rofi
