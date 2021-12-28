@@ -1,2 +1,4 @@
 [user]
 	email = dmg103@gcloud.ua.es
+[credential]
+	helper = store
