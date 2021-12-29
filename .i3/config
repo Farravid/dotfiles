@@ -4,6 +4,12 @@
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
+# Toggle container floating/tilling
+bindsym $mod+Shift+space floating toggle; resize set 1200 800; move absolute position center
+
+# Center and resize floating container
+bindsym $mod+c resize set 1200 800; move absolute position center
+
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
@@ -61,8 +67,8 @@ bindsym $mod+e exec pcmanfm
 bindsym $mod+Shift+e exec ranger
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+#bindsym $mod+t exec --no-startup-id pkill picom
+#bindsym $mod+Ctrl+t exec --no-startup-id picom -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
@@ -113,9 +119,6 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 #bindsym $mod+w layout tabbed
 #bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -273,11 +276,11 @@ bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config ~/.config/picom.conf
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
+#exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
@@ -320,31 +323,29 @@ set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-	i3bar_command i3bar
-	status_command i3status
-	position bottom
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
-
+	id bar-1
+        i3bar_command i3bar --t
+	status_command py3status
+	position top
+	tray_output primary
 	bindsym button4 nop
 	bindsym button5 nop
-#   font xft:URWGothic-Book 11
-	strip_workspace_numbers yes
+	strip_workspace_numbers no
+        font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+        font pango:xft:monospace 10
 
     colors {
-        background #222D31
-        statusline #F9FAF9
-        separator  #454947
+        background $term_background
+        statusline #d79921
+        separator  #cc241d
 
-#                      border  backgr. text
-        focused_workspace  #F9FAF9 #16a085 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #222D31 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
+#                          border  backgr. text
+       focused_workspace  #689d68 #689d68 #1d2021
+       active_workspace   #1d2021 #1d2021 #d79921
+       inactive_workspace #1d2021 #1d2021 #d79921
+        binding_mode       #F9FAF9 #F9FAF9 #2F343F
+       urgent_workspace   #cc241d #cc241d #1d2021
+   }
 }
 
 # hide/unhide i3status bar
